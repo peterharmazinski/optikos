@@ -1,0 +1,87 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Kanban
+{% endblock %}
+
+{% block main %}
+
+<div class="jumbotron text-center">
+  <h1>Welcome to Optikós</h1>
+  <p>Continue visualizing your journey</p> 
+</div>
+
+{% if get_flashed_messages() %}
+  <header>
+    <div class="alert alert-danger" role="alert">
+        {{ get_flashed_messages() | join(" ") }}
+    </div>
+  </header>
+{% endif %}
+    
+<div class="container-fluid">
+<form action="{{ url_for('login') }}" method="post" data-toggle="validator">
+        <fieldset>
+            
+  <div class="row">
+    <div class="col-xs-2 col-sm-3 col-md-4 col-lg-5">
+    </div>
+    <div class="col-xs-8 col-sm-6 col-md-4 col-lg-2">
+      <div class="form-group">
+                <input autocomplete="off" autofocus class="form-control" name="username" placeholder="Username" type="text" data-error="Username is required" required/>
+                <div class="help-block with-errors"></div>
+      </div>
+    </div>
+    <div class="col-xs-2 col-sm-3 col-md-4 col-lg-5">
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="col-xs-2 col-sm-3 col-md-4 col-lg-5">
+    </div>
+    <div class="col-xs-8 col-sm-6 col-md-4 col-lg-2">
+      <div class="form-group">
+                <input class="form-control" name="password" placeholder="Password" type="password" data-error="Password is required" required/>
+                <div class="help-block with-errors"></div>
+            </div>
+    </div>
+    <div class="col-xs-2 col-sm-3 col-md-4 col-lg-5">
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="col-xs-2 col-sm-3 col-md-4 col-lg-5">
+    </div>
+    <div class="col-xs-8 col-sm-6 col-md-4 col-lg-2">
+      <div class="form-group">
+                <button class="btn btn-default" type="submit">Log In</button>
+            </div>
+    </div>
+    <div class="col-xs-2 col-sm-3 col-md-4 col-lg-5">
+    </div>
+  </div>
+   </fieldset>
+    </form>
+
+  
+
+   
+
+<form action="{{ url_for('guest') }}">
+        <fieldset>
+    <div class="row">
+    <div class="col-xs-2 col-sm-3 col-md-4 col-lg-5">
+    </div>
+    <div class="col-xs-8 col-sm-6 col-md-4 col-lg-2">
+      <div class="form-group">
+                <button class="btn btn-default" type="submit">I'm a Guest</button>
+            </div>
+    </div>
+    <div class="col-xs-2 col-sm-3 col-md-4 col-lg-5">
+    </div>
+  </div>
+     </fieldset>
+    </form>
+</div>
+{% endblock %}
+

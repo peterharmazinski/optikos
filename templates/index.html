@@ -1,0 +1,217 @@
+{% extends "layout.html" %}
+
+
+{% block title %}
+    Kanban
+{% endblock %}
+
+{% block main %}
+
+{% include "modal.html" %}
+
+<div class="container">
+  <button data-toggle="modal" data-target="#addModal" class="kc_fab_main_btn">+</button>
+</div>
+
+
+
+
+
+<div class="container">
+  <div id="titles" class="row">
+    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 big-title">
+      <h3>To Do</h3>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 big-title">
+      <h3>Doing</h3>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 big-title">
+      <h3>Pending</h3>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 big-title">
+      <h3>Done</h3>
+    </div>
+  </div>
+  <div id="kanban" class="row">
+    
+    <div id="col-1" class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+      <div class="col-md-3 small-title">
+      <h3>To Do</h3>
+    </div>
+      <div id="col-1-sortable" class="sortable">
+      
+      <div class="panel-group draggable">
+        <div class="panel panel-default panel-cat1">
+          <div class="panel-heading cat1">
+            <span class="glyphicon glyphicon-menu-down" data-toggle="collapse" href="#collapse1"></span>
+            <h4 class="panel-title" data-toggle="collapse" href="#collapse1">
+              Collapsible panel
+            </h4>
+            <span class="glyphicon glyphicon-edit" data-toggle="modal" data-target="#editModal"></span>
+          </div>
+        <div id="collapse1" class="panel-collapse collapse">
+        <div class="panel-body">Panel Body</div>
+        <div class="panel-footer">Panel Footer</div>
+        </div>
+        </div>
+      </div>
+      <div class="panel-group draggable">
+        <div class="panel panel-default panel-cat2">
+          <div class="panel-heading cat2">
+            <span class="glyphicon glyphicon-menu-down" data-toggle="collapse" href="#collapse2"></span>
+            <h4 class="panel-title" data-toggle="collapse" href="#collapse2">
+              Shopping List
+            </h4>
+            <span class="glyphicon glyphicon-edit" data-toggle="modal" data-target="#editModal"></span>
+          </div>
+        <div id="collapse2" class="panel-collapse collapse">
+          <div class="panel-body">Description</div>
+          <ul class="list-group">
+    <li class="list-group-item"><input type="checkbox" name="checkbox-1" id="checkbox-1">
+    <label for="checkbox-1">Bananas</label></li>
+    <li class="list-group-item"><input type="checkbox" name="checkbox-2" id="checkbox-2">
+    <label for="checkbox-2">Chicken</label></li>
+    <li class="list-group-item"><input type="checkbox" name="checkbox-3" id="checkbox-3">
+    <label for="checkbox-3">Bread</label></li>
+    <li class="list-group-item"><input type="checkbox" name="checkbox-4" id="checkbox-4">
+    <label for="checkbox-4">Eggs</label></li>
+
+  </ul>
+  
+ 
+        <div class="panel-footer">Panel Footer</div>
+        </div>
+        </div>
+      </div>
+      
+      </div>
+    </div>
+    
+    <div id="col-2" class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+      <div class="col-md-3 small-title">
+      <h3>Doing</h3>
+    </div>
+      <div class="sortable">
+      
+      <div class="panel-group draggable">
+        <div class="panel panel-default panel-cat3">
+          <div class="panel-heading cat3">
+            <span class="glyphicon glyphicon-menu-down" data-toggle="collapse" href="#collapse3"></span>
+            <h4 class="panel-title" data-toggle="collapse" href="#collapse3">
+              Collapsible panel
+            </h4>
+            <span class="glyphicon glyphicon-edit" data-toggle="modal" data-target="#editModal"></span>
+          </div>
+        <div id="collapse3" class="panel-collapse collapse">
+        <div class="panel-body">Panel Body</div>
+        <div class="panel-footer">Panel Footer</div>
+        </div>
+        </div>
+      </div>
+      <div class="panel-group draggable">
+        <div class="panel panel-default  panel-cat4">
+          <div class="panel-heading cat4">
+            <span class="glyphicon glyphicon-menu-down" data-toggle="collapse" href="#collapse4"></span>
+            <h4 class="panel-title" data-toggle="collapse" href="#collapse4">
+              Collapsible panel
+            </h4>
+            <span class="glyphicon glyphicon-edit" data-toggle="modal" data-target="#editModal"></span>
+          </div>
+        <div id="collapse4" class="panel-collapse collapse">
+        <div class="panel-body">Panel Body</div>
+        <div class="panel-footer">Panel Footer</div>
+        </div>
+        </div>
+      </div>
+      
+      </div>
+    </div>
+    
+    <div id="col-3" class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+      <div class="col-md-3 small-title">
+      <h3>Pending</h3>
+    </div>
+      <div class="sortable">
+      
+      <div class="panel-group draggable">
+        <div class="panel panel-default panel-cat5">
+          <div class="panel-heading cat5">
+            <span class="glyphicon glyphicon-menu-down" data-toggle="collapse" href="#collapse5"></span>
+            <h4 class="panel-title" data-toggle="collapse" href="#collapse5">
+              Collapsible panel
+            </h4>
+            <span class="glyphicon glyphicon-edit" data-toggle="modal" data-target="#editModal"></span>
+          </div>
+        <div id="collapse5" class="panel-collapse collapse">
+        <div class="panel-body">Panel Body</div>
+        <div class="panel-footer">Panel Footer</div>
+        </div>
+        </div>
+      </div>
+      <div class="panel-group draggable">
+        <div class="panel panel-default panel-cat1">
+          <div class="panel-heading cat1">
+            <span class="glyphicon glyphicon-menu-down" data-toggle="collapse" href="#collapse6"></span>
+            <h4 class="panel-title" data-toggle="collapse" href="#collapse6">
+              Collapsible panel
+            </h4>
+            <span class="glyphicon glyphicon-edit" data-toggle="modal" data-target="#editModal"></span>
+          </div>
+        <div id="collapse6" class="panel-collapse collapse">
+        <div class="panel-body">Panel Body</div>
+        <div class="panel-footer">Panel Footer</div>
+        </div>
+        </div>
+      </div>
+      
+      </div>
+    </div>
+    
+    <div id="col-4" class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+      <div class="col-md-3 small-title">
+      <h3>Done</h3>
+    </div>
+      <div class="sortable">
+      
+      <div class="panel-group draggable">
+        <div class="panel panel-default panel-cat2">
+          <div class="panel-heading cat2">
+            <span class="glyphicon glyphicon-menu-down" data-toggle="collapse" href="#collapse7"></span>
+            <h4 class="panel-title" data-toggle="collapse" href="#collapse7">
+              Collapsible panel
+            </h4>
+            <span class="glyphicon glyphicon-edit" data-toggle="modal" data-target="#editModal"></span>
+          </div>
+        <div id="collapse7" class="panel-collapse collapse">
+        <div class="panel-body">Panel Body</div>
+        <div class="panel-footer">Panel Footer</div>
+        </div>
+        </div>
+      </div>
+      <div class="panel-group draggable">
+        <div class="panel panel-default panel-cat3">
+          <div class="panel-heading cat3">
+            <span class="glyphicon glyphicon-menu-down" data-toggle="collapse" href="#collapse8"></span>
+            <h4 class="panel-title" data-toggle="collapse" href="#collapse8">
+              Collapsible panel
+            </h4>
+            <span class="glyphicon glyphicon-edit" data-toggle="modal" data-target="#editModal"></span>
+          </div>
+        <div id="collapse8" class="panel-collapse collapse">
+        <div class="panel-body">Panel Body</div>
+        <div class="panel-footer">Panel Footer</div>
+        </div>
+        </div>
+      </div>
+      
+      </div>
+    </div>
+    
+    
+    
+  </div>
+</div>
+
+
+{% endblock %}
+

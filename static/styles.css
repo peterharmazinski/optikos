@@ -1,0 +1,324 @@
+body {
+    font-family: "Open Sans";
+}
+
+.navbar-brand {
+    margin-left: 0px !important;
+    color: #4da6ff !important;
+    font-family: 'Gloria Hallelujah', cursive;
+}
+  
+#navbar {
+    padding-right: 15px;
+}
+  
+.small-title {
+    display: none;
+}
+  
+ .activity {
+     margin: 5px;
+     width: 100% !important;
+     box-shadow: 0 10px 20px rgba(0,0,0,0.25), 0 5px 5px rgba(0,0,0,0.22);
+     border-radius: 3px;
+ }
+
+  /* Remove list bullets */
+  li {
+    list-style-type: none;
+  }
+ 
+ /* Remove list padding on the left */
+ ul {
+    -webkit-padding-start: 0px;
+ }
+ 
+ .sortable {
+    height: auto;
+    min-height: 100px;
+    /*overflow-y: auto;*/
+    /*overflow-x: hidden;*/
+ }
+
+#navbar {
+    background-color: white;
+}
+
+.jumbotron {
+    background-color: #4da6ff;
+}
+
+h1 {
+    color: white !important;
+    font-family: 'Gloria Hallelujah', cursive;
+}
+
+h3 {
+    background-color: white;
+    padding: 5px 0 5px 0;
+    text-align: center;
+    border: 2px solid #cce0ff;
+    border-radius: 10px;
+    color: #666666;
+}
+
+.panel-title {
+    display: inline-block;
+    margin-left: 5px;
+    color: #404040;
+}
+
+.panel-heading span,
+.panel-footer span {
+    font-size: 1.25em;
+    color: #404040;
+}
+
+.panel-title:hover {
+    color: white;
+}
+
+.panel-heading .glyphicon-menu-down:hover {
+    color: white;
+}
+
+.panel-footer .glyphicon-edit {
+    float: left;
+}
+
+.panel-heading .glyphicon-chevron-down {
+    float: left;
+}
+
+.panel-heading .hours {
+    float: right;
+}
+
+.panel-body {
+    background-color: white;
+}
+
+.panel-footer {
+    text-align: right;
+    background-color: white !important;
+}
+
+.panel-footer .glyphicon-remove:hover {
+    color: red;
+}
+
+.panel-footer .glyphicon-edit:hover {
+    color: green;
+}
+
+#mySidenav:before { 
+    content:'\2630';
+    font-size: 5em;
+}
+
+#deleteModal p {
+    color: red;
+}
+
+.panel {
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+
+.panel-group {
+    margin: 10px 10px 20px 0px !important;
+    height: auto !important;
+    width: 100%;
+}
+
+/* Style page content - use this if you want to push the page content to the right when you open the side navigation */
+#main {
+    transition: margin-left .5s;
+    padding: 20px;
+}
+
+/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+@media screen and (max-height: 450px) {
+    .sidenav {padding-top: 15px;}
+    .sidenav a {font-size: 18px;}
+    .sortable {height: auto;}
+    .sortable {min-height: auto;}
+}
+
+.container {
+    padding-top: 25px;
+    width: 100% !important;
+}
+
+/* Category colors */
+.blue {
+    background-color: #66a3ff !important;
+}
+
+.green {
+    background-color: #00cc66 !important;
+}
+
+.pink {
+    background-color: #ff66ff !important;
+}
+
+.orange {
+    background-color: #ff9933 !important;
+}
+
+.red {
+    background-color: #ff5050 !important;
+}
+
+/* Custom spinner */
+.spinner {
+  width: 100px;
+}
+.spinner input {
+  text-align: right;
+}
+.input-group-btn > .btn {
+    height: 138%;    
+}
+.input-group-btn-vertical {
+  position: relative;
+  white-space: nowrap;
+  width: 1%;
+  vertical-align: middle;
+  display: table-cell;
+}
+.input-group-btn-vertical > .btn {
+  display: block;
+  float: none;
+  width: 100%;
+  max-width: 100%;
+  padding: 8px;
+  margin-left: -1px;
+  position: relative;
+  border-radius: 0;
+}
+.input-group-btn-vertical > .btn:first-child {
+  border-top-right-radius: 4px;
+}
+.input-group-btn-vertical > .btn:last-child {
+  margin-top: -2px;
+  border-bottom-right-radius: 4px;
+}
+.input-group-btn-vertical i{
+  position: absolute;
+  top: 0;
+  left: 4px;
+}
+
+/* Display floating action button */
+.kc_fab_main_btn{
+  background-color:#F44336;
+  width:60px;
+  height:60px;
+  border-radius:100%;
+  background:#F44336;
+  border:none;
+  outline:none;
+  color:#FFF;
+  font-size:36px;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  transition:.3s;  
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  z-index: 1000;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  margin: 2%;
+}
+
+/* Prevent navbar from covering table */
+.page-start {
+    margin-top: 5%;
+}
+
+/* Center align glyphicons */
+#boards-list td:not(:first-child),
+#boards-list th:not(:first-child) {
+    text-align: center;
+    
+}
+
+#boards-list .glyphicon-eye-open:hover {
+    color: #4da6ff;
+}
+
+#boards-list .glyphicon-edit:hover {
+    color: green;
+}
+
+#boards-list .glyphicon-remove:hover {
+    color: red;
+}
+
+.board-id {
+    display: none;
+}
+
+th {
+    background-color: #4da6ff;
+    color: white;
+}
+
+/* List Items */
+.btn span.glyphicon {    			
+	opacity: 0;				
+}
+.btn.active span.glyphicon {				
+	opacity: 1;				
+}
+.btn-group {
+    display: inline-block;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+}
+
+.btn {
+    margin-bottom: 1px !important;
+}
+
+.btn:active,
+.btn.active,
+.btn:focus.active,
+.btn:focus:active,
+.btn.focus:active,
+.btn.focus,
+.btn.active.focus {
+    outline: none !important;
+    -webkit-box-shadow: none !important;
+    -moz-box-shadow: none !important;
+    box-shadow: none !important;
+}
+
+
+
+.list-item-title,
+.list-remove,
+.list-add {
+    text-align: right;
+    display: inline-block;
+}
+
+.list-item {
+    background-color: white;
+    border: 1px solid lightgray;
+}
+
+.completed {
+    opacity: 0.5;
+}
+
+.list-dropdown {
+    display: inline-block;
+    float: right;
+}
+
+.dropdown-toggle {
+    background-color: white;
+    color: black !important;
+}

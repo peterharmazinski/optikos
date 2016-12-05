@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+    <head>
+
+        <!-- documentation at http://getbootstrap.com/, alternative themes at https://www.bootstrapcdn.com/bootswatch/ -->
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
+        
+        <!-- Datepicker for Bootstrap forms -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker3.min.css" rel="stylesheet"/>
+
+        <link href="{{ url_for('static', filename='styles.css') }}" rel="stylesheet"/>
+        
+        <!-- Brand font -->
+        <link href="https://fonts.googleapis.com/css?family=Gloria+Hallelujah" rel="stylesheet">
+        
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+        <meta charset="utf-8"/>
+        <meta content="initial-scale=1, width=device-width" name="viewport"/>
+
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+        
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+        
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        
+        <!-- Bootstrap form validation -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.5/validator.min.js"></script>
+        
+        <!-- Datepicker for Bootstrap form -->
+        <script src=" https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.min.js"></script>
+        
+        <!-- Enables touchscreen events -->
+        <script type="text/javascript" src="{{ url_for('static', filename='jquery.ui.touch-punch.js') }}"></script>
+        
+        <!-- Charts for analytics -->
+        <script src="https://code.highcharts.com/highcharts.js"></script>
+    
+        <!-- http://stewartjpark.com/Flask-JSGlue/ -->
+        {{ JSGlue.include() }}
+
+        <!-- app's own JavaScript -->
+   
+        <script type="text/javascript" src="{{ url_for('static', filename='scripts.js') }}"></script>
+
+        <title>Optikós: {% block title %}{% endblock %}</title>
+
+    </head>
+
+    <body>
+
+        <div class="container">
+
+            <nav class="navbar navbar-default navbar-fixed-top">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <button aria-expanded="false" class="navbar-toggle collapsed" data-target="#navbar" data-toggle="collapse" type="button">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="">Optikós</a>
+                    </div>
+                    <div class="collapse navbar-collapse" id="navbar">
+                        {% if session.user_id %}
+                            <ul class="nav navbar-nav">
+                                <li><a href="" data-toggle="modal" data-target="#add-board-modal">New Board</a></li>
+                                <li><a href="{{ url_for('boards') }}">Boards</a></li>
+                                <li><a href="{{ url_for('history') }}">History</a></li>
+                                <li><a href="">Analytics</a></li>
+                                <li><a href="">Recurring</a></li>
+                            </ul>
+                            <ul class="nav navbar-nav navbar-right">
+                                <li><a href="{{ url_for('password') }}">Change Password</a></li>
+                                <li><a href="{{ url_for('login') }}">Log Out</a></li>
+                            </ul>
+                        {% else %}
+                            <ul class="nav navbar-nav navbar-right">
+                                <li><a href="{{ url_for('register') }}">Register</a></li>
+                                <li><a href="{{ url_for('login') }}">Log In</a></li>
+                            </ul>
+                        {% endif %}
+                    </div>
+                </div>
+            </nav>
+
+            
+
+            <main>
+                {% block main %}{% endblock %}
+            </main>
+            
+            <!-- Modal -->
+<div id="add-board-modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Create a New Board</h4>
+      </div>
+      <form id="add-board-form" action="{{ url_for('add_board') }}" method="post">
+          <fieldset>
+        <div class="form-group">
+      <div class="modal-body">
+          <p>
+              <label for="title">Board Title</label>
+              <input autocomplete="off" autofocus class="form-control" name="title" placeholder="Board Title" type="text"/>
+         </p>
+        <p>
+            <label for="col-1">Column 1</label>
+            <input autocomplete="off" autofocus class="form-control" name="col-1" placeholder="Column 1 Title" type="text"/>
+        </p>
+        <p>
+            <label for="col-2">Column 2</label>
+            <input autocomplete="off" autofocus class="form-control" name="col-2" placeholder="Column 2 Title" type="text"/>
+         </p>
+        <p>
+            <label for="col-3">Column 3</label>
+            <input autocomplete="off" autofocus class="form-control" name="col-3" placeholder="Column 3 Title" type="text"/>
+        </p>
+        <p>
+            <label for="col-4">Column 4</label>
+            <input autocomplete="off" autofocus class="form-control" name="col-4" placeholder="Column 4 Title" type="text"/>
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" onclick="addBoard()" type="submit" data-dismiss="modal">Save</button>
+        <button type="button" class="btn btn-default" type="reset" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+    </fieldset>
+    </form>
+
+  </div>
+</div>
+</div>
+            
+        </div>
+        
+
+
+        
+
+
+    </body>
+
+</html>

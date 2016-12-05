@@ -1,0 +1,84 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Kanban
+{% endblock %}
+
+{% block main %}
+
+<div class="jumbotron text-center">
+  <h1>Welcome to Optikós</h1>
+  <p>Start visualizing your journey</p> 
+</div>
+
+{% if get_flashed_messages() %}
+  <header>
+    <div class="alert alert-danger" role="alert">
+        {{ get_flashed_messages() | join(" ") }}
+    </div>
+  </header>
+{% endif %}
+
+<form action="{{ url_for('register') }}" method="post" data-toggle="validator">
+        <fieldset>
+            <div class="container-fluid">
+  <div class="row">
+    <div class="col-xs-2 col-sm-3 col-md-4 col-lg-5">
+    </div>
+    <div class="col-xs-8 col-sm-6 col-md-4 col-lg-2">
+      <div class="form-group">
+                <input autocomplete="off" autofocus class="form-control" name="username" placeholder="Username" type="text" data-error="Username is required" required/>
+                <div class="help-block with-errors"></div>
+      </div>
+    </div>
+    <div class="col-xs-2 col-sm-3 col-md-4 col-lg-5">
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="col-xs-2 col-sm-3 col-md-4 col-lg-5">
+    </div>
+    <div class="col-xs-8 col-sm-6 col-md-4 col-lg-2">
+      <div class="form-group">
+                <input id="password" class="form-control" name="password" placeholder="Password" type="password" data-minlength="6" data-error="Password must be 6+ characters long" required/>
+                <div class="help-block with-errors"></div>
+            </div>
+    </div>
+    <div class="col-xs-2 col-sm-3 col-md-4 col-lg-5">
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="col-xs-2 col-sm-3 col-md-4 col-lg-5">
+    </div>
+    <div class="col-xs-8 col-sm-6 col-md-4 col-lg-2">
+      <div class="form-group">
+                <input class="form-control" name="password_2" placeholder="Confirm Password" type="password" data-match="#password" data-match-error="Passwords must match" required/>
+                <div class="help-block with-errors"></div>
+            </div>
+    </div>
+    <div class="col-xs-2 col-sm-3 col-md-4 col-lg-5">
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="col-xs-2 col-sm-3 col-md-4 col-lg-5">
+    </div>
+    <div class="col-xs-8 col-sm-6 col-md-4 col-lg-2">
+      <div class="form-group">
+                <button class="btn btn-default" type="submit">Get Started</button>
+            </div>
+    </div>
+    <div class="col-xs-2 col-sm-3 col-md-4 col-lg-5">
+    </div>
+  </div>
+</div>
+        </fieldset>
+    </form>
+
+
+
+
+
+{% endblock %}
+
