@@ -1,16 +1,21 @@
-
-
-
-
-
-
 $( document ).ready(function() {
 
+    // Revert cards to their original position if outside a sortable element.
+    $("#draggable").draggable({
+        revert : function(event, ui) {
+            $(this).data("uiDraggable").originalPosition = {
+                top : 0,
+                left : 0
+            };
+            return !event;
+        }
+    });
 
-        
-
-    // Activity cards are sortable
+    // Columns are sortable
     $( ".sortable" ).sortable({
+        
+        // Don't allow cards to be dragged by the panel-body
+        cancel: ".not-draggable",
         tolerance: "pointer",
         connectWith: ".sortable",
         revert: true,
@@ -21,14 +26,7 @@ $( document ).ready(function() {
         }   
     });
     
-    // Activity cards are sortable
-    $( ".sortable-list" ).sortable({
-        tolerance: "pointer",
-        revert: true,
-        
-
-    });
-    
+    // Make sortable columns also droppable
     $( "#col-1-sortable" ).droppable({
         drop: function( event, ui ) {
             card_id = $(ui.draggable).attr("data-id");
@@ -37,35 +35,71 @@ $( document ).ready(function() {
             window.location.href = "/edit-card-column/" + card_id + "/" + 1;
         }
     });
+    
     $( "#col-2-sortable" ).droppable({
         drop: function( event, ui ) {
            card_id = $(ui.draggable).attr("data-id");
             $(ui.draggable).attr("data-column", "2");
-            
+
             window.location.href = "/edit-card-column/" + card_id + "/" + 2;
         }
     });
+    
     $( "#col-3-sortable" ).droppable({
         drop: function( event, ui ) {
             card_id = $(ui.draggable).attr("data-id");
             $(ui.draggable).attr("data-column", "3");
-            
+
             window.location.href = "/edit-card-column/" + card_id + "/" + 3;
         }
     });
+    
     $( "#col-4-sortable" ).droppable({
         drop: function( event, ui ) {
             card_id = $(ui.draggable).attr("data-id");
             $(ui.draggable).attr("data-column", "4");
-            
+
             window.location.href = "/edit-card-column/" + card_id + "/" + 4;
         }
     });
+    // Make guest sortable columns also droppable
+    $( "#guest-col-1-sortable" ).droppable({
+        drop: function( event, ui ) {
+            card_id = $(ui.draggable).attr("data-id");
+            $(ui.draggable).attr("data-column", "1");
+
+        }
+    });
     
+    $( "#guest-col-2-sortable" ).droppable({
+        drop: function( event, ui ) {
+           card_id = $(ui.draggable).attr("data-id");
+            $(ui.draggable).attr("data-column", "2");
+
+        }
+    });
+    
+    $( "#guest-col-3-sortable" ).droppable({
+        drop: function( event, ui ) {
+            card_id = $(ui.draggable).attr("data-id");
+            $(ui.draggable).attr("data-column", "3");
+
+        }
+    });
+    
+    $( "#guest-col-4-sortable" ).droppable({
+        drop: function( event, ui ) {
+            card_id = $(ui.draggable).attr("data-id");
+            $(ui.draggable).attr("data-column", "4");
+
+        }
+    });
+    
+    // Forms use a datepicker
     $('.datepicker').datepicker();
     
-    // A custom spinner is used as bootstrap prevents jqueryui spinner
-    // from working,
+    // A custom spinner is used as Bootstrap prevents JQueryUI spinner
+    // from working.
     $(document).on('click', '.number-spinner button', function () {    
 	    var btn = $(this),
     		oldValue = btn.closest('.number-spinner').find('input').val().trim(),
@@ -83,21 +117,15 @@ $( document ).ready(function() {
     	btn.closest('.number-spinner').find('input').val(newVal);
     });
     
-    $(document).ready(function() {
-        $("#reset").click(function() {
-            $("input").val("");
-            $("textarea").val("");
-            $("textarea").val("");
-            $("#hours").val("1");
-        });
+    
+    // Reset forms
+    $("#reset").click(function() {
+        $("input").val("");
+        $("textarea").val("");
+        $("textarea").val("");
+        $("#hours").val("1");
     });
 
-        
-    // Determine window size
-    window.onload=function(){
-        var borderWidth = getBorderWidth();
-        adjustBorder(borderWidth);
-    };
     
     // On large screens the column titles are in a separate 
     // bootstrap row from the kanban board. These column titles
@@ -106,7 +134,7 @@ $( document ).ready(function() {
     // elements are used that are within the kanban board row.
     window.onresize = function changeTitles() {
             
-    if ($(window).width() < 992) {
+    if ($(window).width() < 975) {
         //small screen, load other JS files
         $( ".big-title" ).hide();
         $( ".small-title" ).show();  
@@ -117,10 +145,10 @@ $( document ).ready(function() {
         $( ".panel-group" ).css("width", "100%");  
     }
 
- 
 };
 
-if ($(window).width() < 992) {
+// Check initial window size.
+if ($(window).width() < 975) {
     //small screen, load other JS files
     $( ".big-title" ).hide();
     $( ".small-title" ).show();  
@@ -134,23 +162,40 @@ if ($(window).width() < 992) {
 
 });
 
-function addCard() {
+/*
+ * Submit buttons don't work on modals, so onclick
+ * events are used and the forms are submitted
+ * through the following functions.
+ */
+function addCard() 
+{
    document.getElementById("add-card-form").submit();
 }
 
-function editCard(card_id) {
+// Edit an existing card on the board.
+function editCard(card_id) 
+{
     document.getElementById("edit-card-form-" + card_id).submit();
 }
 
-function addBoard(board_id) {
+// 
+function editListItem(card_id, item_id) 
+{
+   document.getElementById("edit-list-item-form-" + card_id + "-" + item_id).submit();
+}
+
+function addBoard(board_id) 
+{
    document.getElementById("add-board-form").submit();
 }
 
-function editBoard(board_id) {
+function editBoard(board_id) 
+{
    document.getElementById("edit-board-form-" + board_id).submit();
 }
 
-function editCardCollapse(card_id) {
+function editCardCollapse(card_id) 
+{
     var collapsed;
     
     // The class 'in' actually indicates that it's not collapsed
@@ -164,9 +209,3 @@ function editCardCollapse(card_id) {
     window.location.href = "/edit-card-collapse/" + card_id + "/" + collapsed;
 }
 
-$(function () // on document.ready()
-{
-    if ($('#boards-list').length > 0) {
-        
-    }
-});

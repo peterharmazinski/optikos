@@ -33,12 +33,7 @@ body {
     -webkit-padding-start: 0px;
  }
  
- .sortable {
-    height: auto;
-    min-height: 100px;
-    /*overflow-y: auto;*/
-    /*overflow-x: hidden;*/
- }
+
 
 #navbar {
     background-color: white;
@@ -62,15 +57,29 @@ h3 {
     color: #666666;
 }
 
+.panel-group {
+    word-wrap: break-word;
+}
+
+.panel-col {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.panel-col-1 {
+    margin-left: 5px;
+}
+
 .panel-title {
     display: inline-block;
     margin-left: 5px;
     color: #404040;
 }
 
+
+
 .panel-heading span,
 .panel-footer span {
-    font-size: 1.25em;
     color: #404040;
 }
 
@@ -137,11 +146,49 @@ h3 {
 }
 
 /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
-@media screen and (max-height: 450px) {
-    .sidenav {padding-top: 15px;}
-    .sidenav a {font-size: 18px;}
-    .sortable {height: auto;}
-    .sortable {min-height: auto;}
+@media handheld, screen and (min-width: 100px) { 
+     .sortable {
+        height: auto;
+        min-height: 100px;
+        /*overflow-y: auto;*/
+        /*overflow-x: hidden;*/
+     }
+     
+     .panel-group,
+     .panel-group h4 {
+         font-size: .95em;
+     }
+}
+
+/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+@media handheld, screen and (min-width: 450px){ 
+     .sortable {
+        height: auto;
+        min-height: 100px;
+        /*overflow-y: auto;*/
+        /*overflow-x: hidden;*/
+     }
+     
+     .panel-group,
+     .panel-group h4 {
+         font-size: .95em;
+     }
+}
+
+/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+@media handheld, screen and (min-width: 992px){ 
+     .sortable {
+        height: auto;
+        min-height: 500px;
+        border: .5px solid #cce0ff;
+        /*overflow-y: auto;*/
+        /*overflow-x: hidden;*/
+     }
+     
+     .panel-group, 
+     .panel-group h4 {
+         font-size: 1em;
+     }
 }
 
 .container {
@@ -265,10 +312,10 @@ th {
 }
 
 /* List Items */
-.btn span.glyphicon {    			
+.btn span.glyphicon-ok {    			
 	opacity: 0;				
 }
-.btn.active span.glyphicon {				
+.btn.active span.glyphicon-ok {				
 	opacity: 1;				
 }
 .btn-group {
@@ -321,4 +368,8 @@ th {
 .dropdown-toggle {
     background-color: white;
     color: black !important;
+}
+
+#charts {
+    margin-top: 50px;
 }

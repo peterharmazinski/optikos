@@ -15,6 +15,7 @@
         <!-- Brand font -->
         <link href="https://fonts.googleapis.com/css?family=Gloria+Hallelujah" rel="stylesheet">
         
+        <!-- Site font -->
         <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
 
         <meta charset="utf-8"/>
@@ -24,7 +25,7 @@
         
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
         
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="{{ url_for('static', filename='bootstrap.min.js') }}"></script>
         
         <!-- Bootstrap form validation -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.5/validator.min.js"></script>
@@ -55,6 +56,7 @@
 
             <nav class="navbar navbar-default navbar-fixed-top">
                 <div class="container-fluid">
+                    
                     <div class="navbar-header">
                         <button aria-expanded="false" class="navbar-toggle collapsed" data-target="#navbar" data-toggle="collapse" type="button">
                             <span class="sr-only">Toggle navigation</span>
@@ -64,26 +66,35 @@
                         </button>
                         <a class="navbar-brand" href="">Optikós</a>
                     </div>
+                    
                     <div class="collapse navbar-collapse" id="navbar">
+                        
                         {% if session.user_id %}
+                        
                             <ul class="nav navbar-nav">
                                 <li><a href="" data-toggle="modal" data-target="#add-board-modal">New Board</a></li>
                                 <li><a href="{{ url_for('boards') }}">Boards</a></li>
                                 <li><a href="{{ url_for('history') }}">History</a></li>
-                                <li><a href="">Analytics</a></li>
+                                <li><a href="{{ url_for('analytics') }}">Analytics</a></li>
                                 <li><a href="">Recurring</a></li>
                             </ul>
+                            
                             <ul class="nav navbar-nav navbar-right">
                                 <li><a href="{{ url_for('password') }}">Change Password</a></li>
                                 <li><a href="{{ url_for('login') }}">Log Out</a></li>
                             </ul>
+                            
                         {% else %}
+                        
                             <ul class="nav navbar-nav navbar-right">
                                 <li><a href="{{ url_for('register') }}">Register</a></li>
                                 <li><a href="{{ url_for('login') }}">Log In</a></li>
                             </ul>
+                            
                         {% endif %}
+                        
                     </div>
+                    
                 </div>
             </nav>
 
@@ -94,59 +105,59 @@
             </main>
             
             <!-- Modal -->
-<div id="add-board-modal" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Create a New Board</h4>
-      </div>
-      <form id="add-board-form" action="{{ url_for('add_board') }}" method="post">
-          <fieldset>
-        <div class="form-group">
-      <div class="modal-body">
-          <p>
-              <label for="title">Board Title</label>
-              <input autocomplete="off" autofocus class="form-control" name="title" placeholder="Board Title" type="text"/>
-         </p>
-        <p>
-            <label for="col-1">Column 1</label>
-            <input autocomplete="off" autofocus class="form-control" name="col-1" placeholder="Column 1 Title" type="text"/>
-        </p>
-        <p>
-            <label for="col-2">Column 2</label>
-            <input autocomplete="off" autofocus class="form-control" name="col-2" placeholder="Column 2 Title" type="text"/>
-         </p>
-        <p>
-            <label for="col-3">Column 3</label>
-            <input autocomplete="off" autofocus class="form-control" name="col-3" placeholder="Column 3 Title" type="text"/>
-        </p>
-        <p>
-            <label for="col-4">Column 4</label>
-            <input autocomplete="off" autofocus class="form-control" name="col-4" placeholder="Column 4 Title" type="text"/>
-        </p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" onclick="addBoard()" type="submit" data-dismiss="modal">Save</button>
-        <button type="button" class="btn btn-default" type="reset" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-    </fieldset>
-    </form>
-
-  </div>
-</div>
-</div>
+            <div id="add-board-modal" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                    
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Create a New Board</h4>
+                        </div>
+                        
+                        <form id="add-board-form" action="{{ url_for('add_board') }}" method="post">
+                            <fieldset>
+                                <div class="form-group">
+                                    
+                                    <div class="modal-body">
+                                        <p>
+                                            <label for="title">Board Title</label>
+                                            <input autocomplete="off" autofocus class="form-control" name="title" placeholder="Board Title" type="text"/>
+                                        </p>
+                                        <p>
+                                            <label for="col-1">Column 1</label>
+                                            <input autocomplete="off" autofocus class="form-control" name="col-1" placeholder="Column 1 Title" type="text"/>
+                                        </p>
+                                        <p>
+                                            <label for="col-2">Column 2</label>
+                                            <input autocomplete="off" autofocus class="form-control" name="col-2" placeholder="Column 2 Title" type="text"/>
+                                        </p>
+                                        <p>
+                                            <label for="col-3">Column 3</label>
+                                            <input autocomplete="off" autofocus class="form-control" name="col-3" placeholder="Column 3 Title" type="text"/>
+                                        </p>
+                                        <p>
+                                            <label for="col-4">Column 4</label>
+                                            <input autocomplete="off" autofocus class="form-control" name="col-4" placeholder="Column 4 Title" type="text"/>
+                                        </p>
+                                    </div>
+                                    
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" onclick="addBoard()" type="submit" data-dismiss="modal">Save</button>
+                                        <button type="button" class="btn btn-default" type="reset" data-dismiss="modal">Close</button>
+                                    </div>
+                                
+                                </div>
+                            </fieldset>
+                        </form>
+                        
+                    </div>
+                    
+                </div>
+            </div>
             
         </div>
         
-
-
-        
-
-
     </body>
 
 </html>

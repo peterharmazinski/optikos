@@ -7,467 +7,925 @@
 
 {% block main %}
 
-
-<div class="container">
-    <button data-toggle="modal" data-target="#add-modal" class="kc_fab_main_btn">+</button>
-</div>
-
-<div class="container">
-    
-    <!-- Column titles for big screen view -->
-    <div id="titles" class="row">
-        <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 big-title">
-            <h3>{{ titles[0] }}</h3>
-        </div>
-        <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 big-title">
-            <h3>{{ titles[1] }}</h3>
-        </div>
-        <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 big-title">
-            <h3>{{ titles[2] }}</h3>
-        </div>
-        <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 big-title">
-            <h3>{{ titles[3] }}</h3>
-        </div>
+    <div class="container">
+        <button data-toggle="modal" data-target="#add-modal" class="kc_fab_main_btn">+</button>
     </div>
     
-    <!-- Kanban wall -->
-    <div id="kanban" class="row">
+    <div class="container">
         
-        <div id="col-1" class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
-            <div class="col-md-3 small-title">
+        {% if get_flashed_messages() %}
+    
+            <header>
+                
+                <div class="alert alert-danger" role="alert">
+                    {{ get_flashed_messages() | join(" ") }}
+                </div>
+    
+            </header>
+    
+        {% endif %}
+        
+        <!-- Column titles for big screen view -->
+        <div id="titles" class="row">
+            
+            <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 big-title">
                 <h3>{{ titles[0] }}</h3>
             </div>
-            <div id="col-1-sortable" class="sortable">
-                {% for card in cards %}
-                
-                {% if card.column == 1 %}
-                
-                {% if card.type == "activity" %}
-                
-                <div class="panel panel-group draggable {{ card.color }} {{ card.completed }}" data-id="{{ card.card_id }}" data-column="1">
- 
-                    <div class="panel-heading">
-                        <span class="glyphicon glyphicon-menu-down" data-toggle="collapse" href="#collapse-{{ card.card_id }}" onclick="editCardCollapse({{ card.card_id }})"></span>
-                        <h4 class="panel-title" data-toggle="collapse" href="#collapse1">
-                            {{ card.name }}
-                        </h4>
-                        <span class="hours">
-                            {{ card.hours }} hrs
-                        </span>
-                        
-                    </div>
-                    <div id="collapse-{{ card.card_id }}" class="panel-collapse {{ card.collapse }}">
-                        <div class="panel-body">{{ card.description }}</div>
-                        
-                        <div class="panel-footer">
-                            <span class="glyphicon glyphicon-edit" data-toggle="modal" onclick="editCard({{ card.card_id }})" data-target="#edit-modal-{{ card.card_id }}"></span>
-                            <span class="glyphicon glyphicon-remove" data-toggle="modal" data-target="#delete-modal-{{ card.card_id }}"></span>
-                        </div>
-                    </div>
-      
-                </div>
-                
-                {% endif %}
-                
-                {% if card.type == "list" %}
-                
-                <div class="panel panel-group draggable {{ card.color }}  {{ card.completed }}" data-id="{{ card.card_id }}" data-column="1">
- 
-                    <div class="panel-heading">
-                        <span class="glyphicon glyphicon-menu-down" data-toggle="collapse" href="#collapse-{{ card.card_id }}" onclick="editCardCollapse({{ card.card_id }})"></span>
-                        <h4 class="panel-title" data-toggle="collapse" href="#collapse1">
-                            {{ card.name }}
-                        </h4>
-                        <span class="hours">
-                            {{ card.hours }} hrs
-                        </span>
-                        
-                    </div>
-                    <div id="collapse-{{ card.card_id }}" class="panel-collapse {{ card.collapse }}">
-                        <div class="panel-body sortable-list">{{ card.description }}</div>
-                        
-                        {% for item in card.list_items %}
-                       
-                        <div class="list-item list-item-{{ card.card_id }}-{{ loop.index0 }}">
-                            <div class="btn-group {{ card.color }}" data-toggle="buttons">
-    				<label class="btn checkbox-btn">
-                		
-                				<input type="checkbox" autocomplete="off">
-                				<span class="glyphicon glyphicon-ok"></span>
-                				
-                			</label>
-                			</div>
-                			<div class="list-item-title"><span>{{ item }}</span></div>
-                			<div class="dropdown list-dropdown">
-                              <button class="btn dropdown-toggle glyphicon glyphicon-menu-hamburger" type="button" data-toggle="dropdown">
-                              </button>
-                              <ul class="dropdown-menu">
-                                <li><a href="/insert-list-item/{{ card.card_id }}/{{ loop.index0 }}/{{ loop.index0 }}"><span class="glyphicon glyphicon-triangle-top"></span> Insert Above</a></li>
-                                <li><a href="/insert-list-item/{{ card.card_id }}/{{ loop.index0 }}/{{ loop.index }}"><span class="glyphicon glyphicon-triangle-bottom"></span> Insert Below</a></li>
-                                <li><a href="#"><span class="glyphicon glyphicon-edit"></span> Edit</a></li>
-                                <li><a href="#"><span class="glyphicon glyphicon-arrow-up"></span> Move Up</a></li>
-                                <li><a href="#"><span class="glyphicon glyphicon-arrow-down"></span> Move Down</a></li>
-                                <li><a href="#"><span class="glyphicon glyphicon-remove"></span> Delete</a></li>
-                              </ul>
-                            </div>
-                			
-                		</div>
-                        
-                        {% endfor %}
-                        
-                        <div class="panel-footer">
-                            <span class="glyphicon glyphicon-edit" data-toggle="modal" onclick="editCard({{ card.card_id }})" data-target="#edit-modal-{{ card.card_id }}"></span>
-                            <span class="glyphicon glyphicon-remove" data-toggle="modal" data-target="#delete-modal-{{ card.card_id }}"></span>
-                        </div>
-                    </div>
-      
-                </div>
-                
-                {% endif %}
-
-                {% endif %}
-   
-                {% endfor %}
-            </div>
-        </div>
-    
-        <div id="col-2" class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
-            <div class="col-md-3 small-title">
+            
+            <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 big-title">
                 <h3>{{ titles[1] }}</h3>
             </div>
-            <div id="col-2-sortable" class="sortable">
-                {% for card in cards %}
-                
-                {% if card.column == 2 %}
-                
-                <div class="panel panel-group draggable {{ card.color }}" data-id="{{ card.card_id }}" data-column="2">
- 
-                    <div class="panel-heading">
-                        <span class="glyphicon glyphicon-menu-down" data-toggle="collapse" href="#collapse-{{ card.card_id }}"></span>
-                        <h4 class="panel-title" data-toggle="collapse" href="#collapse1">
-                            {{ card.name }}
-                        </h4>
-                        <span class="hours">
-                            {{ card.hours }} hrs
-                        </span>
-                        
-                    </div>
-                    <div id="collapse-{{ card.card_id }}" class="panel-collapse collapse">
-                        <div class="panel-body">{{ card.description }}</div>
-                        <div class="panel-footer">
-                            <span class="glyphicon glyphicon-edit" data-toggle="modal" onclick="editCard({{ card.card_id }})" data-target="#edit-modal-{{ card.card_id }}"></span>
-                            <span class="glyphicon glyphicon-remove" data-toggle="modal" data-target="#delete-modal-{{ card.card_id }}"></span>
-                        </div>
-                    </div>
-      
-                </div>
-                
-                {% endif %}
-   
-                {% endfor %}
-            </div>
-        </div>
-        
-        <div id="col-3" class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
-            <div class="col-md-3 small-title">
+            
+            <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 big-title">
                 <h3>{{ titles[2] }}</h3>
             </div>
-            <div id="col-3-sortable" class="sortable">
-                {% for card in cards %}
-                
-                {% if card.column == 3 %}
-                
-                <div class="panel panel-group draggable {{ card.color }}" data-id="{{ card.card_id }}" data-column="3">
- 
-                    <div class="panel-heading">
-                        <span class="glyphicon glyphicon-menu-down" data-toggle="collapse" href="#collapse-{{ card.card_id }}"></span>
-                        <h4 class="panel-title" data-toggle="collapse" href="#collapse1">
-                            {{ card.name }}
-                        </h4>
-                        <span class="hours">
-                            {{ card.hours }} hrs
-                        </span>
-                        
-                    </div>
-                    <div id="collapse-{{ card.card_id }}" class="panel-collapse collapse">
-                        <div class="panel-body">{{ card.description }}</div>
-                        <div class="panel-footer">
-                            <span class="glyphicon glyphicon-edit" data-toggle="modal" onclick="editCard({{ card.card_id }})" data-target="#edit-modal-{{ card.card_id }}"></span>
-                            <span class="glyphicon glyphicon-remove" data-toggle="modal" data-target="#delete-modal-{{ card.card_id }}"></span>
-                        </div>
-                    </div>
-      
-                </div>
-                
-                {% endif %}
-   
-                {% endfor %}
-            </div>
-        </div>
-        
-        <div id="col-4" class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
-            <div class="col-md-3 small-title">
+            
+            <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 big-title">
                 <h3>{{ titles[3] }}</h3>
             </div>
-            <div id="col-4-sortable" class="sortable">
-                {% for card in cards %}
+            
+        </div>
+        
+        <!-- Kanban wall -->
+        <div id="kanban" class="row">
+            
+            <div id="col-1" class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
                 
-                {% if card.column == 4 %}
-                
-                <div class="panel panel-group draggable {{ card.color }}" data-id="{{ card.card_id }}" data-column=4">
- 
-                    <div class="panel-heading">
-                        <span class="glyphicon glyphicon-menu-down" data-toggle="collapse" href="#collapse-{{ card.card_id }}"></span>
-                        <h4 class="panel-title" data-toggle="collapse" href="#collapse1">
-                            {{ card.name }}
-                        </h4>
-                        <span class="hours">
-                            {{ card.hours }} hrs
-                        </span>
-                        
-                    </div>
-                    <div id="collapse-{{ card.card_id }}" class="panel-collapse collapse">
-                        <div class="panel-body">{{ card.description }}</div>
-                        <div class="panel-footer">
-                            <span class="glyphicon glyphicon-edit" data-toggle="modal" onclick="editCard({{ card.card_id }})" data-target="#edit-modal-{{ card.card_id }}"></span>
-                            <span class="glyphicon glyphicon-remove" data-toggle="modal" data-target="#delete-modal-{{ card.card_id }}"></span>
-                        </div>
-                    </div>
-      
+                <div class="col-md-3 small-title">
+                    <h3>{{ titles[0] }}</h3>
                 </div>
                 
-                {% endif %}
-   
-                {% endfor %}
+                <div id="col-1-sortable" class="sortable">
+                    
+                    {% for card in cards %}
+                    
+                        {% if card.column == 1 %}
+                    
+                            {% if card.type == "activity" %}
+                    
+                                <div class="panel panel-group draggable {{ card.color }} {{ card.completed }}" data-id="{{ card.card_id }}" data-column="1">
+                                    
+                                    <div class="panel-heading">
+                                        <div class="row">
+                                            
+                                            <div class="panel-col panel-col-1 col-xs-1 col-sm-1 col-md-1 col-lg-1">
+                                                <span class="glyphicon glyphicon-menu-down" data-toggle="collapse" href="#collapse-{{ card.card_id }}" onclick="editCardCollapse({{ card.card_id }})"></span>
+                                            </div>
+                                            
+                                            <div class="panel-col panel-col-2 col-xs-8 col-sm-8 col-md-9 col-lg-8">
+                                                <h4 class="panel-title" data-toggle="collapse" href="#collapse1">
+                                                    {{ card.name }}
+                                                </h4>
+                                            </div>
+                                            
+                                            <div class=" panel-col panel-col-3 col-xs-2 col-sm-2 col-md-1 col-lg-2">
+                                                <span class="hours">
+                                                    {{ card.hours }} hrs
+                                                </span>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                    
+                                    <div id="collapse-{{ card.card_id }}" class="panel-collapse {{ card.collapse }}">
+                                        
+                                        <div class="panel-body not-draggable">{{ card.description }}</div>
+                                        
+                                        <div class="panel-footer">
+                                            <span class="glyphicon glyphicon-edit" data-toggle="modal" data-target="#edit-modal-{{ card.card_id }}"></span>
+                                            <span class="glyphicon glyphicon-remove" data-toggle="modal" data-target="#delete-modal-{{ card.card_id }}"></span>
+                                        </div>
+                                        
+                                    </div>
+                                    
+                                </div>
+                    
+                            {% endif %}
+                    
+                            {% if card.type == "list" %}
+                    
+                                <div class="panel panel-group draggable {{ card.color }}  {{ card.completed }}" data-id="{{ card.card_id }}" data-column="1">
+                                    
+                                    <div class="panel-heading">
+                                        <div class="row">
+                                            
+                                            <div class="panel-col panel-col-1 col-xs-1 col-sm-1 col-md-1 col-lg-1">
+                                                <span class="glyphicon glyphicon-menu-down" data-toggle="collapse" href="#collapse-{{ card.card_id }}" onclick="editCardCollapse({{ card.card_id }})"></span>
+                                            </div>
+                                            
+                                            <div class="panel-col panel-col-2 col-xs-8 col-sm-8 col-md-9 col-lg-8">
+                                                <h4 class="panel-title" data-toggle="collapse" href="#collapse1">
+                                                    {{ card.name }}
+                                                </h4>
+                                            </div>
+                                            
+                                            <div class=" panel-col panel-col-3 col-xs-2 col-sm-2 col-md-1 col-lg-2">
+                                                <span class="hours">
+                                                    {{ card.hours }} hrs
+                                                </span>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                    
+                                    <div id="collapse-{{ card.card_id }}" class="panel-collapse {{ card.collapse }}">
+                                        
+                                        <div class="panel-body sortable-list not-draggable">{{ card.description }}</div>
+                            
+                                        {% for item in card.list_items %}
+                                            
+                                            <div class="not-draggable list-item list-item-{{ card.card_id }}-{{ loop.index0 }}">
+                                                
+                                
+                                                <div class="btn-group {{ card.color }}" data-toggle="buttons">
+                                                    <label id="check-icon" class="btn checkbox-btn">
+                                                        <input class="checkbox" type="checkbox" autocomplete="off">
+                                                        <span class="glyphicon glyphicon-ok" ></span>
+                                                    </label>
+                                                </div>
+                                                
+                                                <div class="list-item-title">
+                                                    <span>
+                                                        {{ item }}
+                                                    </span>
+                                                </div>
+                                                
+                                                <div class="dropdown list-dropdown pull-right" >
+                                                    <button class="btn dropdown-toggle glyphicon glyphicon-menu-hamburger" type="button" data-toggle="dropdown"></button>
+                                                    <ul class="dropdown-menu">
+                                                        <li><a href="#" data-toggle="dropdown"><span class="glyphicon glyphicon-remove-circle"></span> Cancel</a></li>
+                                                        <li><a href="/insert-list-item/{{ board.board_id }}/{{ card.card_id }}/{{ loop.index0 }}"><span class="glyphicon glyphicon-triangle-top"></span> Insert Above</a></li>
+                                                        <li><a href="/insert-list-item/{{ board.board_id }}/{{ card.card_id }}/{{ loop.index }}"><span class="glyphicon glyphicon-triangle-bottom"></span> Insert Below</a></li>
+                                                        <li><a href="#" data-toggle="modal" data-target="#edit-list-item-modal-{{ card.card_id }}-{{ loop.index0 }}"><span class="glyphicon glyphicon-edit"></span> Edit</a></li>
+                                                        <li><a href="/move-list-item/{{ board.board_id }}/{{ card.card_id }}/{{ loop.index0 }}/{{ loop.index0 - 1}}"><span class="glyphicon glyphicon-arrow-up"></span> Move Up</a></li>
+                                                        <li><a href="/move-list-item/{{ board.board_id }}/{{ card.card_id }}/{{ loop.index0 }}/{{ loop.index }}"><span class="glyphicon glyphicon-arrow-down"></span> Move Down</a></li>
+                                                        <li><a href="/delete-list-item/{{ board.board_id }}/{{ card.card_id }}/{{ loop.index0 }}"><span class="glyphicon glyphicon-remove"></span> Delete</a></li>
+                                                    </ul>
+                                                </div>
+                                                
+                                            </div>
+                            
+                                        {% endfor %}
+                            
+                                        <div class="panel-footer">
+                                            <span class="glyphicon glyphicon-edit" data-toggle="modal" data-target="#edit-modal-{{ card.card_id }}"></span>
+                                            <span class="glyphicon glyphicon-remove" data-toggle="modal" data-target="#delete-modal-{{ card.card_id }}"></span>
+                                        </div>
+                                        
+                                    </div>
+                                    
+                                </div>
+                    
+                            {% endif %}
+    
+                        {% endif %}
+       
+                    {% endfor %}
+                    
+                </div>
+                
             </div>
+            
+            <div id="col-2" class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                
+                <div class="col-md-3 small-title">
+                    <h3>{{ titles[1] }}</h3>
+                </div>
+                
+                <div id="col-2-sortable" class="sortable">
+                    
+                    {% for card in cards %}
+                    
+                        {% if card.column == 2 %}
+                    
+                            {% if card.type == "activity" %}
+                    
+                                <div class="panel panel-group draggable {{ card.color }} {{ card.completed }}" data-id="{{ card.card_id }}" data-column="2">
+                                    
+                                    <div class="panel-heading">
+                                        <div class="row">
+                                            
+                                            <div class="panel-col panel-col-1 col-xs-1 col-sm-1 col-md-1 col-lg-1">
+                                                <span class="glyphicon glyphicon-menu-down" data-toggle="collapse" href="#collapse-{{ card.card_id }}" onclick="editCardCollapse({{ card.card_id }})"></span>
+                                            </div>
+                                            
+                                            <div class="panel-col panel-col-2 col-xs-8 col-sm-8 col-md-9 col-lg-8">
+                                                <h4 class="panel-title" data-toggle="collapse" href="#collapse1">
+                                                    {{ card.name }}
+                                                </h4>
+                                            </div>
+                                            
+                                            <div class=" panel-col panel-col-3 col-xs-2 col-sm-2 col-md-1 col-lg-2">
+                                                <span class="hours">
+                                                    {{ card.hours }} hrs
+                                                </span>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                    
+                                    <div id="collapse-{{ card.card_id }}" class="panel-collapse {{ card.collapse }}">
+                                        
+                                        <div class="panel-body not-draggable">{{ card.description }}</div>
+                                        
+                                        <div class="panel-footer">
+                                            <span class="glyphicon glyphicon-edit" data-toggle="modal" data-target="#edit-modal-{{ card.card_id }}"></span>
+                                            <span class="glyphicon glyphicon-remove" data-toggle="modal" data-target="#delete-modal-{{ card.card_id }}"></span>
+                                        </div>
+                                        
+                                    </div>
+                                    
+                                </div>
+                    
+                            {% endif %}
+                    
+                            {% if card.type == "list" %}
+                    
+                                <div class="panel panel-group draggable {{ card.color }}  {{ card.completed }}" data-id="{{ card.card_id }}" data-column="2">
+                                    
+                                    <div class="panel-heading">
+                                        <div class="row">
+                                            
+                                            <div class="panel-col panel-col-1 col-xs-1 col-sm-1 col-md-1 col-lg-1">
+                                                <span class="glyphicon glyphicon-menu-down" data-toggle="collapse" href="#collapse-{{ card.card_id }}" onclick="editCardCollapse({{ card.card_id }})"></span>
+                                            </div>
+                                            
+                                            <div class="panel-col panel-col-2 col-xs-8 col-sm-8 col-md-9 col-lg-8">
+                                                <h4 class="panel-title" data-toggle="collapse" href="#collapse1">
+                                                    {{ card.name }}
+                                                </h4>
+                                            </div>
+                                            
+                                            <div class=" panel-col panel-col-3 col-xs-2 col-sm-2 col-md-1 col-lg-2">
+                                                <span class="hours">
+                                                    {{ card.hours }} hrs
+                                                </span>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                    
+                                    <div id="collapse-{{ card.card_id }}" class="panel-collapse {{ card.collapse }}">
+                                        
+                                        <div class="panel-body sortable-list not-draggable">{{ card.description }}</div>
+                            
+                                        {% for item in card.list_items %}
+                                            
+                                            <div class="not-draggable list-item list-item-{{ card.card_id }}-{{ loop.index0 }}">
+                                                
+                                
+                                                <div class="btn-group {{ card.color }}" data-toggle="buttons">
+                                                    <label id="check-icon" class="btn checkbox-btn">
+                                                        <input class="checkbox" type="checkbox" autocomplete="off">
+                                                        <span class="glyphicon glyphicon-ok" ></span>
+                                                    </label>
+                                                </div>
+                                                
+                                                <div class="list-item-title">
+                                                    <span>
+                                                        {{ item }}
+                                                    </span>
+                                                </div>
+                                                
+                                                <div class="dropdown list-dropdown pull-right" >
+                                                    <button class="btn dropdown-toggle glyphicon glyphicon-menu-hamburger" type="button" data-toggle="dropdown"></button>
+                                                    <ul class="dropdown-menu">
+                                                        <li><a href="#" data-toggle="dropdown"><span class="glyphicon glyphicon-remove-circle"></span> Cancel</a></li>
+                                                        <li><a href="/insert-list-item/{{ board.board_id }}/{{ card.card_id }}/{{ loop.index0 }}"><span class="glyphicon glyphicon-triangle-top"></span> Insert Above</a></li>
+                                                        <li><a href="/insert-list-item/{{ board.board_id }}/{{ card.card_id }}/{{ loop.index }}"><span class="glyphicon glyphicon-triangle-bottom"></span> Insert Below</a></li>
+                                                        <li><a href="#" data-toggle="modal" data-target="#edit-list-item-modal-{{ card.card_id }}-{{ loop.index0 }}"><span class="glyphicon glyphicon-edit"></span> Edit</a></li>
+                                                        <li><a href="/move-list-item/{{ board.board_id }}/{{ card.card_id }}/{{ loop.index0 }}/{{ loop.index0 - 1}}"><span class="glyphicon glyphicon-arrow-up"></span> Move Up</a></li>
+                                                        <li><a href="/move-list-item/{{ board.board_id }}/{{ card.card_id }}/{{ loop.index0 }}/{{ loop.index }}"><span class="glyphicon glyphicon-arrow-down"></span> Move Down</a></li>
+                                                        <li><a href="/delete-list-item/{{ board.board_id }}/{{ card.card_id }}/{{ loop.index0 }}"><span class="glyphicon glyphicon-remove"></span> Delete</a></li>
+                                                    </ul>
+                                                </div>
+                                                
+                                            </div>
+                            
+                                        {% endfor %}
+                            
+                                        <div class="panel-footer">
+                                            <span class="glyphicon glyphicon-edit" data-toggle="modal" data-target="#edit-modal-{{ card.card_id }}"></span>
+                                            <span class="glyphicon glyphicon-remove" data-toggle="modal" data-target="#delete-modal-{{ card.card_id }}"></span>
+                                        </div>
+                                        
+                                    </div>
+                                    
+                                </div>
+                    
+                            {% endif %}
+    
+                        {% endif %}
+       
+                    {% endfor %}
+                    
+                </div>
+                
+            </div>
+            
+            <div id="col-3" class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                
+                <div class="col-md-3 small-title">
+                    <h3>{{ titles[2] }}</h3>
+                </div>
+                
+                <div id="col-3-sortable" class="sortable">
+                    
+                    {% for card in cards %}
+                    
+                        {% if card.column == 3 %}
+                    
+                            {% if card.type == "activity" %}
+                    
+                                <div class="panel panel-group draggable {{ card.color }} {{ card.completed }}" data-id="{{ card.card_id }}" data-column="3">
+                                    
+                                    <div class="panel-heading">
+                                        <div class="row">
+                                            
+                                            <div class="panel-col panel-col-1 col-xs-1 col-sm-1 col-md-1 col-lg-1">
+                                                <span class="glyphicon glyphicon-menu-down" data-toggle="collapse" href="#collapse-{{ card.card_id }}" onclick="editCardCollapse({{ card.card_id }})"></span>
+                                            </div>
+                                            
+                                            <div class="panel-col panel-col-2 col-xs-8 col-sm-8 col-md-9 col-lg-8">
+                                                <h4 class="panel-title" data-toggle="collapse" href="#collapse1">
+                                                    {{ card.name }}
+                                                </h4>
+                                            </div>
+                                            
+                                            <div class=" panel-col panel-col-3 col-xs-2 col-sm-2 col-md-1 col-lg-2">
+                                                <span class="hours">
+                                                    {{ card.hours }} hrs
+                                                </span>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                    
+                                    <div id="collapse-{{ card.card_id }}" class="panel-collapse {{ card.collapse }}">
+                                        
+                                        <div class="panel-body not-draggable">{{ card.description }}</div>
+                                        
+                                        <div class="panel-footer">
+                                            <span class="glyphicon glyphicon-edit" data-toggle="modal" data-target="#edit-modal-{{ card.card_id }}"></span>
+                                            <span class="glyphicon glyphicon-remove" data-toggle="modal" data-target="#delete-modal-{{ card.card_id }}"></span>
+                                        </div>
+                                        
+                                    </div>
+                                    
+                                </div>
+                    
+                            {% endif %}
+                    
+                            {% if card.type == "list" %}
+                    
+                                <div class="panel panel-group draggable {{ card.color }}  {{ card.completed }}" data-id="{{ card.card_id }}" data-column="3">
+                                    
+                                    <div class="panel-heading">
+                                        <div class="row">
+                                            
+                                            <div class="panel-col panel-col-1 col-xs-1 col-sm-1 col-md-1 col-lg-1">
+                                                <span class="glyphicon glyphicon-menu-down" data-toggle="collapse" href="#collapse-{{ card.card_id }}" onclick="editCardCollapse({{ card.card_id }})"></span>
+                                            </div>
+                                            
+                                            <div class="panel-col panel-col-2 col-xs-8 col-sm-8 col-md-9 col-lg-8">
+                                                <h4 class="panel-title" data-toggle="collapse" href="#collapse1">
+                                                    {{ card.name }}
+                                                </h4>
+                                            </div>
+                                            
+                                            <div class=" panel-col panel-col-3 col-xs-2 col-sm-2 col-md-1 col-lg-2">
+                                                <span class="hours">
+                                                    {{ card.hours }} hrs
+                                                </span>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                    
+                                    <div id="collapse-{{ card.card_id }}" class="panel-collapse {{ card.collapse }}">
+                                        
+                                        <div class="panel-body sortable-list not-draggable">{{ card.description }}</div>
+                            
+                                        {% for item in card.list_items %}
+                                            
+                                            <div class="not-draggable list-item list-item-{{ card.card_id }}-{{ loop.index0 }}">
+                                                
+                                
+                                                <div class="btn-group {{ card.color }}" data-toggle="buttons">
+                                                    <label id="check-icon" class="btn checkbox-btn">
+                                                        <input class="checkbox" type="checkbox" autocomplete="off">
+                                                        <span class="glyphicon glyphicon-ok" ></span>
+                                                    </label>
+                                                </div>
+                                                
+                                                <div class="list-item-title">
+                                                    <span>
+                                                        {{ item }}
+                                                    </span>
+                                                </div>
+                                                
+                                                <div class="dropdown list-dropdown pull-right" >
+                                                    <button class="btn dropdown-toggle glyphicon glyphicon-menu-hamburger" type="button" data-toggle="dropdown"></button>
+                                                    <ul class="dropdown-menu">
+                                                        <li><a href="#" data-toggle="dropdown"><span class="glyphicon glyphicon-remove-circle"></span> Cancel</a></li>
+                                                        <li><a href="/insert-list-item/{{ board.board_id }}/{{ card.card_id }}/{{ loop.index0 }}"><span class="glyphicon glyphicon-triangle-top"></span> Insert Above</a></li>
+                                                        <li><a href="/insert-list-item/{{ board.board_id }}/{{ card.card_id }}/{{ loop.index }}"><span class="glyphicon glyphicon-triangle-bottom"></span> Insert Below</a></li>
+                                                        <li><a href="#" data-toggle="modal" data-target="#edit-list-item-modal-{{ card.card_id }}-{{ loop.index0 }}"><span class="glyphicon glyphicon-edit"></span> Edit</a></li>
+                                                        <li><a href="/move-list-item/{{ board.board_id }}/{{ card.card_id }}/{{ loop.index0 }}/{{ loop.index0 - 1}}"><span class="glyphicon glyphicon-arrow-up"></span> Move Up</a></li>
+                                                        <li><a href="/move-list-item/{{ board.board_id }}/{{ card.card_id }}/{{ loop.index0 }}/{{ loop.index }}"><span class="glyphicon glyphicon-arrow-down"></span> Move Down</a></li>
+                                                        <li><a href="/delete-list-item/{{ board.board_id }}/{{ card.card_id }}/{{ loop.index0 }}"><span class="glyphicon glyphicon-remove"></span> Delete</a></li>
+                                                    </ul>
+                                                </div>
+                                                
+                                            </div>
+                            
+                                        {% endfor %}
+                            
+                                        <div class="panel-footer">
+                                            <span class="glyphicon glyphicon-edit" data-toggle="modal" data-target="#edit-modal-{{ card.card_id }}"></span>
+                                            <span class="glyphicon glyphicon-remove" data-toggle="modal" data-target="#delete-modal-{{ card.card_id }}"></span>
+                                        </div>
+                                        
+                                    </div>
+                                    
+                                </div>
+                    
+                            {% endif %}
+    
+                        {% endif %}
+       
+                    {% endfor %}
+                    
+                </div>
+                
+            </div>
+            
+            <div id="col-4" class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                
+                <div class="col-md-3 small-title">
+                    <h3>{{ titles[3] }}</h3>
+                </div>
+                
+                <div id="col-4-sortable" class="sortable">
+                    
+                    {% for card in cards %}
+                    
+                        {% if card.column == 4 %}
+                    
+                            {% if card.type == "activity" %}
+                    
+                                <div class="panel panel-group draggable {{ card.color }} {{ card.completed }}" data-id="{{ card.card_id }}" data-column="4">
+                                    
+                                    <div class="panel-heading">
+                                        <div class="row">
+                                            
+                                            <div class="panel-col panel-col-1 col-xs-1 col-sm-1 col-md-1 col-lg-1">
+                                                <span class="glyphicon glyphicon-menu-down" data-toggle="collapse" href="#collapse-{{ card.card_id }}" onclick="editCardCollapse({{ card.card_id }})"></span>
+                                            </div>
+                                            
+                                            <div class="panel-col panel-col-2 col-xs-8 col-sm-8 col-md-9 col-lg-8">
+                                                <h4 class="panel-title" data-toggle="collapse" href="#collapse1">
+                                                    {{ card.name }}
+                                                </h4>
+                                            </div>
+                                            
+                                            <div class=" panel-col panel-col-3 col-xs-2 col-sm-2 col-md-1 col-lg-2">
+                                                <span class="hours">
+                                                    {{ card.hours }} hrs
+                                                </span>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                    
+                                    <div id="collapse-{{ card.card_id }}" class="panel-collapse {{ card.collapse }}">
+                                        
+                                        <div class="panel-body not-draggable">{{ card.description }}</div>
+                                        
+                                        <div class="panel-footer">
+                                            <span class="glyphicon glyphicon-edit" data-toggle="modal" data-target="#edit-modal-{{ card.card_id }}"></span>
+                                            <span class="glyphicon glyphicon-remove" data-toggle="modal" data-target="#delete-modal-{{ card.card_id }}"></span>
+                                        </div>
+                                        
+                                    </div>
+                                    
+                                </div>
+                    
+                            {% endif %}
+                    
+                            {% if card.type == "list" %}
+                    
+                                <div class="panel panel-group draggable {{ card.color }}  {{ card.completed }}" data-id="{{ card.card_id }}" data-column="4">
+                                    
+                                    <div class="panel-heading">
+                                        <div class="row">
+                                            
+                                            <div class="panel-col panel-col-1 col-xs-1 col-sm-1 col-md-1 col-lg-1">
+                                                <span class="glyphicon glyphicon-menu-down" data-toggle="collapse" href="#collapse-{{ card.card_id }}" onclick="editCardCollapse({{ card.card_id }})"></span>
+                                            </div>
+                                            
+                                            <div class="panel-col panel-col-2 col-xs-8 col-sm-8 col-md-9 col-lg-8">
+                                                <h4 class="panel-title" data-toggle="collapse" href="#collapse1">
+                                                    {{ card.name }}
+                                                </h4>
+                                            </div>
+                                            
+                                            <div class=" panel-col panel-col-3 col-xs-2 col-sm-2 col-md-1 col-lg-2">
+                                                <span class="hours">
+                                                    {{ card.hours }} hrs
+                                                </span>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                    
+                                    <div id="collapse-{{ card.card_id }}" class="panel-collapse {{ card.collapse }}">
+                                        
+                                        <div class="panel-body sortable-list not-draggable">{{ card.description }}</div>
+                            
+                                        {% for item in card.list_items %}
+                                            
+                                            <div class="not-draggable list-item list-item-{{ card.card_id }}-{{ loop.index0 }}">
+                                                
+                                
+                                                <div class="btn-group {{ card.color }}" data-toggle="buttons">
+                                                    <label id="check-icon" class="btn checkbox-btn">
+                                                        <input class="checkbox" type="checkbox" autocomplete="off">
+                                                        <span class="glyphicon glyphicon-ok" ></span>
+                                                    </label>
+                                                </div>
+                                                
+                                                <div class="list-item-title">
+                                                    <span>
+                                                        {{ item }}
+                                                    </span>
+                                                </div>
+                                                
+                                                <div class="dropdown list-dropdown pull-right" >
+                                                    <button class="btn dropdown-toggle glyphicon glyphicon-menu-hamburger" type="button" data-toggle="dropdown"></button>
+                                                    <ul class="dropdown-menu">
+                                                        <li><a href="#" data-toggle="dropdown"><span class="glyphicon glyphicon-remove-circle"></span> Cancel</a></li>
+                                                        <li><a href="/insert-list-item/{{ board.board_id }}/{{ card.card_id }}/{{ loop.index0 }}"><span class="glyphicon glyphicon-triangle-top"></span> Insert Above</a></li>
+                                                        <li><a href="/insert-list-item/{{ board.board_id }}/{{ card.card_id }}/{{ loop.index }}"><span class="glyphicon glyphicon-triangle-bottom"></span> Insert Below</a></li>
+                                                        <li><a href="#" data-toggle="modal" data-target="#edit-list-item-modal-{{ card.card_id }}-{{ loop.index0 }}"><span class="glyphicon glyphicon-edit"></span> Edit</a></li>
+                                                        <li><a href="/move-list-item/{{ board.board_id }}/{{ card.card_id }}/{{ loop.index0 }}/{{ loop.index0 - 1}}"><span class="glyphicon glyphicon-arrow-up"></span> Move Up</a></li>
+                                                        <li><a href="/move-list-item/{{ board.board_id }}/{{ card.card_id }}/{{ loop.index0 }}/{{ loop.index }}"><span class="glyphicon glyphicon-arrow-down"></span> Move Down</a></li>
+                                                        <li><a href="/delete-list-item/{{ board.board_id }}/{{ card.card_id }}/{{ loop.index0 }}"><span class="glyphicon glyphicon-remove"></span> Delete</a></li>
+                                                    </ul>
+                                                </div>
+                                                
+                                            </div>
+                            
+                                        {% endfor %}
+                            
+                                        <div class="panel-footer">
+                                            <span class="glyphicon glyphicon-edit" data-toggle="modal" data-target="#edit-modal-{{ card.card_id }}"></span>
+                                            <span class="glyphicon glyphicon-remove" data-toggle="modal" data-target="#delete-modal-{{ card.card_id }}"></span>
+                                        </div>
+                                        
+                                    </div>
+                                    
+                                </div>
+                    
+                            {% endif %}
+    
+                        {% endif %}
+       
+                    {% endfor %}
+                    
+                </div>
+                
+            </div>
+            
         </div>
         
     </div>
+
+    <!-- Modal -->
+    <div id="add-modal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
     
-</div>
+            <!-- Modal content-->
+            <div class="modal-content">
+                
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Add Card</h4>
+                </div>
+                
+                <form id="add-card-form" action="{{ url_for('add_card') }}"  method="post" data-toggle="validator">
+                    <fieldset>
+                      <div class="form-group">
 
-<!-- Modal -->
-<div id="add-modal" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Add Card</h4>
-      </div>
-      
-      <div class="modal-body"> 
-    <form id="add-card-form" action="{{ url_for('add_card') }}"  method="post">
-        <fieldset>
-        <div class="form-group">
-            <p class="board-id">
-            <input readonly autocomplete="off" autofocus class="form-control" name="board_id" placeholder="Board Number" type="number" value="{{ board.board_id }}"/>
-          </p>
-          <p>
-            <input autocomplete="off" autofocus class="form-control" name="title" placeholder="Title" type="text"/>
-          </p>
-          <p>
-            <textarea autocomplete="off" autofocus class="form-control" name="description" placeholder="Description" type="text"></textarea>
-          </p>
-          <p>
-            <label for="column">Columns</label>
-            <select class="form-control" name="column">
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
-            </select>
-          </p>
-          <p>
-			<label for="priority">Priority</label>
-          <select class="form-control" name="priority">
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-          </select>
-          </p>
-          <p>
-            <label for="reoccuring">Reoccurs</label>
-            <select class="form-control" name="recurring">
-              <option>Never</option>
-              <option>Daily</option>
-              <option>Sunday</option>
-              <option>Monday</option>
-              <option>Tuesday</option>
-              <option>Wednesday</option>
-              <option>Thursday</option>
-              <option>Friday</option>
-              <option>Saturday</option>
-            </select>
-          </p>
-          <p>
-            <label for="type">Card Type</label>
-            <select class="form-control" name="type">
-              <option>Activity</option>
-              <option>List</option>
-            </select>
-          </p>
-    
-          <label for="number-spinner">Hours</label>
-          <div class="input-group number-spinner">
-				<span class="input-group-btn">
-					<button class="btn btn-default" type="button" data-dir="dwn"><span class="glyphicon glyphicon-minus"></span></button>
-				</span>
-				<input id="hours" type="text" class="form-control text-center" name="hours" value="1">
-				<span class="input-group-btn">
-					<button class="btn btn-default" type="button" data-dir="up"><span class="glyphicon glyphicon-plus"></span></button>
-				</span>
-			</div>
-	<p></p>
-			<p>
-			<label for="color">Color</label>
-          <select class="form-control" name="color">
-            <option>Blue</option>
-            <option>Green</option>
-            <option>Pink</option>
-            <option>Orange</option>
-            <option>Red</option>
-          </select>
-          </p>
-          <label for="completion_date">Completion Date</label>
-          <div class="input-group date" data-provide="datepicker">
-    <input type="text" class="form-control" name="completion_date">
-    <div class="input-group-addon">
-        <span class="glyphicon glyphicon-th"></span>
-    </div>
-</div>
-          
-      </div>
-      
-      </div>
-      
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" onclick="addCard()" type="submit" data-dismiss="modal">Save</button>
-        <button id="reset" type="button" class="btn btn-default" type="reset" data-dismiss="modal">Close</button>
-      </div>
-      
-    </fieldset>
-      </form>
-
-  </div>
-</div>
-</div>
-
-{% for card in cards %}
-
-<!-- Modal -->
-<div id="edit-modal-{{ card.card_id }}" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Edit Card</h4>
-      </div>
-      <form action="{{ url_for('edit_card', card_id=card.card_id ) }}">
-          <fieldset>
-        <div class="form-group">
-      <div class="modal-body">
-          
-          <p>
-            <input autocomplete="off" autofocus class="form-control" name="title" placeholder="Title" type="text"/>
-          </p>
-          <p>
-            <textarea autocomplete="off" autofocus class="form-control" name="description" placeholder="Description" type="text"></textarea>
-          </p>
-          <p>
-            <label for="reoccuring">Reoccurs</label>
-            <select class="form-control" id="reocurring">
-              <option>Never</option>
-              <option>Daily</option>
-              <option>Sunday</option>
-              <option>Monday</option>
-              <option>Tuesday</option>
-              <option>Wednesday</option>
-              <option>Thursday</option>
-              <option>Friday</option>
-              <option>Saturday</option>
-            </select>
-          </p>
-          <p>
-            <label for="type">Card Type</label>
-            <select class="form-control" id="type">
-              <option>Activity</option>
-              <option>List</option>
-            </select>
-          </p>
-          <p>
-          <label for="number-spinner">Hours</label>
-          <div class="input-group number-spinner">
-				<span class="input-group-btn">
-					<button class="btn btn-default" data-dir="dwn"><span class="glyphicon glyphicon-minus"></span></button>
-				</span>
-				<input type="text" class="form-control text-center" value="1">
-				<span class="input-group-btn">
-					<button class="btn btn-default" data-dir="up"><span class="glyphicon glyphicon-plus"></span></button>
-				</span>
-			</div>
-			</p>
-			<p>
-			<label for="color">Color</label>
-          <select class="form-control" id="color">
-            <option>Blue</option>
-            <option>Green</option>
-            <option>Pink</option>
-            <option>Orange</option>
-            <option>Red</option>
-          </select>
-          </p>
-          <label for="completion_date">Completion Date</label>
-          <div class="input-group date" data-provide="datepicker">
-    <input type="text" class="form-control" name="completion_date">
-    <div class="input-group-addon">
-        <span class="glyphicon glyphicon-th"></span>
-    </div>
-</div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" type="submit" data-dismiss="modal">Save</button>
-        <button type="button" class="btn btn-default" type="reset" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-    </fieldset>
-    </form>
-
-  </div>
-</div>
-</div>
-
-
-<!-- Modal -->
-<div id="delete-modal-{{ card.card_id }}" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Delete Card</h4>
-      </div>
-      <div class="modal-body">
-        <div class="form-group">
-          <p>
-            Are you sure you want to delete this card? No takebacks!
-          </p>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" onclick="window.location.href='/delete-card/{{ board.board_id }}/{{ card.card_id }}'" data-dismiss="modal">Yes</button>
-        <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
-      </div>
+                            <div class="modal-body"> 
+                            
+                                <div class="form-group board-id">
+                                    <input readonly autocomplete="off" autofocus class="form-control" name="board_id" placeholder="Board Number" type="number" value="{{ board.board_id }}"/>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <input autocomplete="off" autofocus class="form-control" name="title" placeholder="Title" type="text" data-error="Enter a title" required/>
+                                    <div class="help-block with-errors"></div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <textarea autocomplete="off" autofocus class="form-control" name="description" placeholder="Description" type="text"></textarea>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="column">Columns</label>
+                                    <select class="form-control" name="column">
+                                        <option>1</option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                        <option>4</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="priority">Priority</label>
+                                    <select class="form-control" name="priority">
+                                        <option>1</option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="reoccuring">Reoccurs</label>
+                                    <select class="form-control" name="recurring">
+                                        <option>Never</option>
+                                        <option>Daily</option>
+                                        <option>Sunday</option>
+                                        <option>Monday</option>
+                                        <option>Tuesday</option>
+                                        <option>Wednesday</option>
+                                        <option>Thursday</option>
+                                        <option>Friday</option>
+                                        <option>Saturday</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="type">Card Type</label>
+                                    <select class="form-control" name="type">
+                                        <option>Activity</option>
+                                        <option>List</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="number-spinner">Hours</label>
+                                    <div class="input-group number-spinner">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-default" type="button" data-dir="dwn">
+                                                <span class="glyphicon glyphicon-minus"></span>
+                                            </button>
+                                        </span>
+                                        <input id="hours" type="text" class="form-control text-center" name="hours" value="1" data-error="Enter hours" required>
+                                        <div class="help-block with-errors"></div>
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-default" type="button" data-dir="up">
+                                                <span class="glyphicon glyphicon-plus"></span>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                                
+                             
+                                
+                                <div class="form-group">
+                                    <label for="color">Color</label>
+                                    <select class="form-control" name="color">
+                                        <option>Blue</option>
+                                        <option>Green</option>
+                                        <option>Pink</option>
+                                        <option>Orange</option>
+                                        <option>Red</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="completion_date">Completion Date</label>
+                                    <div class="input-group date" data-provide="datepicker">
+                                        <input type="text" class="form-control" name="completion_date">
+                                        <div class="input-group-addon">
+                                            <span class="glyphicon glyphicon-th"></span>
+                                        </div>
+                                    </div>
+                                <div>
+                                
+                            </div>
+                        </div>
+                            
+                        <div class="modal-footer form-group">
+                            <button type="button" class="btn btn-default" onclick="addCard()" type="submit" data-dismiss="modal">Save</button>
+                            <button id="reset" type="button" class="btn btn-default" type="reset" data-dismiss="modal">Close</button>
+                        </div>
+                            
+                        
+                    </fieldset>
+                </form>
+                
+            </div>
+            
+        </div>
     </div>
 
-  </div>
-</div>
-</div>
-</div>
+    {% for card in cards %}
 
-{% endfor %}
+        <!-- Modal -->
+        <div id="edit-modal-{{ card.card_id }}" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+        
+                <!-- Modal content-->
+                <div class="modal-content">
+                    
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Edit Card</h4>
+                    </div>
+                    
+                    <form id="edit-card-form-{{ card.card_id }}" action="{{ url_for('edit_card', card_id=card.card_id, originating_page='board') }}"  method="post" data-toggle="validator">
+                        <fieldset>
+                            <div class="form-group">
+                            
+                                <div class="modal-body"> 
+                                
+                                    <div class="form-group board-id">
+                                        <input readonly autocomplete="off" autofocus class="form-control" name="board_id" placeholder="Board Number" type="number" value="{{ board.board_id }}"/>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <input autocomplete="off" autofocus class="form-control" name="title" placeholder="Title" type="text" value="{{ card.name }}" data-error="Enter a title" required/>
+                                        <div class="help-block with-errors"></div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <textarea autocomplete="off" autofocus class="form-control" name="description" placeholder="Description" type="text">{{ card.description }}</textarea>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="column">Columns</label>
+                                        <select class="form-control" name="column">
+                                            <option selected>{{ card.column }}</option>
+                                            <option {% if card.column == 1 %} selected {% endif %}>1</option>
+                                            <option {% if card.column == 2 %} selected {% endif %}>2</option>
+                                            <option {% if card.column == 3 %} selected {% endif %}>3</option>
+                                            <option {% if card.column == 4 %} selected {% endif %}>4</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="priority">Priority</label>
+                                        <select class="form-control" name="priority" value="">
+                                            <option {% if card.priority == 1 %} selected {% endif %}>1</option>
+                                            <option {% if card.priority == 2 %} selected {% endif %}>2</option>
+                                            <option {% if card.priority == 3 %} selected {% endif %}>3</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="reoccuring">Reoccurs</label>
+                                        <select class="form-control" name="recurring" value="{{ card.recurring }}">
+                                            <option {% if card.recurring == "never" %} selected {% endif %}>Never</option>
+                                            <option {% if card.recurring == "daily" %} selected {% endif %}>Daily</option>
+                                            <option {% if card.recurring == "sunday" %} selected {% endif %}>Sunday</option>
+                                            <option {% if card.recurring == "monday" %} selected {% endif %}>Monday</option>
+                                            <option {% if card.recurring == "tuesday" %} selected {% endif %}>Tuesday</option>
+                                            <option {% if card.recurring == "wednesday" %} selected {% endif %}>Wednesday</option>
+                                            <option {% if card.recurring == "thursday" %} selected {% endif %}>Thursday</option>
+                                            <option {% if card.recurring == "friday" %} selected {% endif %}>Friday</option>
+                                            <option {% if card.recurring == "saturday" %} selected {% endif %}>Saturday</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <label for="number-spinner">Hours</label>
+                                    <div class="input-group number-spinner">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-default" type="button" data-dir="dwn">
+                                                <span class="glyphicon glyphicon-minus"></span>
+                                            </button>
+                                        </span>
+                                        <input id="hours" type="text" class="form-control text-center" name="hours" value="{{ card.hours }}" data-error="Enter hours" required>
+                                        <div class="help-block with-errors"></div>
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-default" type="button" data-dir="up">
+                                                <span class="glyphicon glyphicon-plus"></span>
+                                            </button>
+                                        </span>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="color">Color</label>
+                                        <select class="form-control" name="color" value="{{ card.color }}">
+                                            <option {% if card.color == "blue" %} selected {% endif %}>Blue</option>
+                                            <option {% if card.color == "green" %} selected {% endif %}>Green</option>
+                                            <option {% if card.color == "pink" %} selected {% endif %}>Pink</option>
+                                            <option {% if card.color == "orange" %} selected {% endif %}>Orange</option>
+                                            <option {% if card.color == "red" %} selected {% endif %}>Red</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="completion_date">Completion Date</label>
+                                        <div class="input-group date" data-provide="datepicker">
+                                            <input type="text" class="form-control" name="completion_date" value="{{ card.completion_date }}">
+                                            <div class="input-group-addon">
+                                                <span class="glyphicon glyphicon-th"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            
+                                <div class="form-group modal-footer">
+                                    <button type="button" class="btn btn-default" onclick="editCard({{ card.card_id }})" type="submit" data-dismiss="modal">Save</button>
+                                    <button id="reset" type="button" class="btn btn-default" type="reset" data-dismiss="modal">Close</button>
+                                </div>
+                            
+                            </div>
+                        </fieldset>
+                    </form>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        <!-- Modal -->
+        <div id="delete-modal-{{ card.card_id }}" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+        
+                <!-- Modal content-->
+                <div class="modal-content">
+                    
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Delete Card</h4>
+                    </div>
+                    
+                    <div class="form-group">
+                        
+                        <div class="modal-body">
+                            <p>Are you sure you want to delete this card? No takebacks!</p>
+                        </div>
+                        
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" onclick="window.location.href='/delete-card/{{ board.board_id }}/{{ card.card_id }}/board'" data-dismiss="modal">Yes</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                        </div>
+                        
+                    </div>
+                
+                </div>
+                
+            </div>
+        </div>
+
+        {% if card.type == "list" %}
+
+            {% for item in card.list_items %}
+
+                <!-- Modal -->
+                <div id="edit-list-item-modal-{{ card.card_id }}-{{ loop.index0 }}" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
+                        
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">Edit List Item</h4>
+                            </div>
+                            
+                            <form id="edit-list-item-form-{{ card.card_id }}-{{ loop.index0 }}" action="{{ url_for('edit_list_item', board_id=board.board_id, card_id=card.card_id, item_id=loop.index0 ) }}"  method="post" data-toggle="validator">
+                                <fieldset>
+                                    <div class="form-group">
+                                        
+                                        <div class="modal-body">
+                                            <p><input autocomplete="off" autofocus class="form-control" name="title" placeholder="Title" type="text" value="{{ item }}"/></p>
+                                        </div>
+                                        
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" onclick="editListItem({{ card.card_id }}, {{ loop.index0 }})" data-dismiss="modal">Save</button>
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                        </div>
+                                        
+                                    </div>
+                                </fieldset>
+                            </form>
+                            
+                        </div>
+                        
+                    </div>
+                </div>
+
+            {% endfor %}
+
+        {% endif %}
+
+    {% endfor %}
 
 {% endblock %}
 
